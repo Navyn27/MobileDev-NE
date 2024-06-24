@@ -82,6 +82,10 @@ const styles = StyleSheet.create({
   post: {
     flex: 1,
     paddingRight: 30,
+    borderBottomColor: "grey",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    paddingBottom: 5,
   },
   next: {
     flexDirection: "row",

@@ -76,7 +76,7 @@ export default function Home({ navigation: propNavigation }) {
         <FlatList
           data={posts}
           renderItem={({ item }) => (
-            <View style={{ marginTop: 15 }}>
+            <View style={{ marginTop: 20 }}>
               <PostItem item={item} updatePosts={updatePosts} />
             </View>
           )}
