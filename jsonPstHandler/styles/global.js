@@ -4,7 +4,7 @@ export const globalStyles = StyleSheet.create({
   titleText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#00417D",
   },
   paragraph: {
     marginVertical: 8,
@@ -17,15 +17,17 @@ export const globalStyles = StyleSheet.create({
     paddingRight: 25,
   },
   button: {
-    backgroundColor: "grey",
+    backgroundColor: "#00417D",
     width: 100,
     justifyContent: "center",
     alignItems: "center",
     height: 40,
     borderRadius: 10,
+    flexDirection: "row",
   },
   bigTitle: {
     fontWeight: "bold",
     fontSize: 25,
+    color: "#00417D",
   },
 });

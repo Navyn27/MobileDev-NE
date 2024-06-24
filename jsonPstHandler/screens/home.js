@@ -11,6 +11,7 @@ import { globalStyles } from "../styles/global";
 import PostItem from "../components/PostItem";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Home({ navigation: propNavigation }) {
   const navigation = propNavigation || useNavigation();
@@ -25,9 +26,19 @@ export default function Home({ navigation: propNavigation }) {
     });
   }, []);
 
-  // if (!navigation) {
-  //   return <Text>Loading...</Text>; // Display a loading text or any other placeholder if navigation is not ready
-  // }
+  const updatePosts = (post) => {
+    setPosts(removeElementFromArray(posts, post));
+  };
+
+  function removeElementFromArray(array, element) {
+    return array.filter(function (item) {
+      return item !== element;
+    });
+  }
+
+  if (!navigation) {
+    return <Text>Loading...</Text>; // Display a loading text or any other placeholder if navigation is not ready
+  }
 
   return (
     <View style={styles.container}>
@@ -50,7 +61,12 @@ export default function Home({ navigation: propNavigation }) {
           style={globalStyles.button}
           onPress={(post) => navigation.navigate("AddPost", { post })}
         >
-          <Text style={styles.post}>Add Post</Text>
+          <View>
+            <Ionicons name="add-outline" size={15} color="white" />
+          </View>
+          <View>
+            <Text style={styles.post}>Add Post</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={{ marginLeft: 20 }}>
@@ -61,7 +77,7 @@ export default function Home({ navigation: propNavigation }) {
           data={posts}
           renderItem={({ item }) => (
             <View style={{ marginTop: 15 }}>
-              <PostItem item={item} />
+              <PostItem item={item} updatePosts={updatePosts} />
             </View>
           )}
         />
@@ -73,7 +89,6 @@ export default function Home({ navigation: propNavigation }) {
 const styles = StyleSheet.create({
   post: {
     color: "white",
-    fontWeight: "bold",
   },
   container: {
     paddingTop: 5,

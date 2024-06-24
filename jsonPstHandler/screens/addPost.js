@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Alert, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  TextInput,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
 import { TouchableOpacity } from "react-native";
@@ -26,6 +35,11 @@ export default function ReviewDetails({ navigation: propNavigation }) {
         Alert.alert("OOPS!", "The Post Title field must not be empty");
       } else if (!body) {
         Alert.alert("OOPS!", "The Post Body field must not be empty");
+      } else if (body.length < 10) {
+        Alert.alert(
+          "OOPS!",
+          "The Post Content should be more than 10 characters long"
+        );
       } else {
         setIsLoading(true);
         const response = await axios.post(
@@ -60,55 +74,62 @@ export default function ReviewDetails({ navigation: propNavigation }) {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.bigTitle}>Create a new post</Text>
-      <View style={styles.inputs}>
-        <Text style={styles.labelText}>User Id</Text>
-        <TextInput
-          style={styles.inputField}
-          placeholder="User Id"
-          keyboardType="numeric"
-          value={userId}
-          onChangeText={(val) => {
-            setUserId(val);
-          }}
-        />
-        <Text style={styles.labelText}>Post title</Text>
-        <TextInput
-          style={styles.inputField}
-          placeholder="Post Title"
-          onChangeText={(val) => {
-            setPostTitle(val);
-          }}
-          value={postTitle}
-        />
-        <Text style={styles.labelText}>Post Body</Text>
-        <TextInput
-          style={styles.inputField2}
-          placeholder="Post Body"
-          onChangeText={(val) => {
-            setBody(val);
-          }}
-          value={body}
-        />
-        <TouchableOpacity style={styles.btn} onPress={savePost}>
-          <View>
-            <Text style={styles.btnText}>Save Post</Text>
-          </View>
-        </TouchableOpacity>
+    <TouchableWithoutFeedback
+      omPress={() => {
+        Keyboard.dismiss;
+      }}
+    >
+      <View style={globalStyles.container}>
+        <Text style={globalStyles.bigTitle}>Create a new post</Text>
+        <View style={styles.inputs}>
+          <Text style={styles.labelText}>User Id</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder="User Id"
+            keyboardType="numeric"
+            value={userId}
+            onChangeText={(val) => {
+              setUserId(val);
+            }}
+          />
+          <Text style={styles.labelText}>Post title</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder="Post Title"
+            onChangeText={(val) => {
+              setPostTitle(val);
+            }}
+            value={postTitle}
+          />
+          <Text style={styles.labelText}>Post Body</Text>
+          <TextInput
+            style={styles.inputField2}
+            placeholder="Post Body"
+            onChangeText={(val) => {
+              setBody(val);
+            }}
+            value={body}
+          />
+          {isLoading ? (
+            <TouchableOpacity style={styles.btn}>
+              <View>
+                <Text style={styles.btnText}>Saving...</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.btn} onPress={savePost}>
+              <View>
+                <Text style={styles.btnText}>Save Post</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  inputField: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
-  },
   labelText: {
     fontSize: 16,
     color: "#333",
@@ -121,6 +142,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1,
     padding: 7,
+    paddingLeft: 20,
     borderRadius: 15,
     marginBottom: 10,
   },
@@ -128,6 +150,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1,
     padding: 7,
+    paddingLeft: 20,
     height: 100,
     borderRadius: 15,
     marginBottom: 10,
@@ -135,7 +158,6 @@ const styles = StyleSheet.create({
   btnText: {
     color: "white",
     fontSize: 15,
-    fontWeight: "bold",
   },
   btn: {
     justifyContent: "center",
@@ -146,6 +168,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 15,
     marginBottom: 10,
-    backgroundColor: "black",
+    backgroundColor: "#00417D",
   },
 });

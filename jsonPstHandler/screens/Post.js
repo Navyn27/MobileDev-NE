@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, FlatList } from "react-native";
 import { globalStyles } from "../styles/global";
 import Comment from "../components/Comment";
 import axios from "axios";
@@ -51,19 +51,18 @@ export default function Post({ item }) {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={styles.title}>Posts</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{post.title}</Text>
       <View style={styles.post}>
-        <Text style={globalStyles.titleText}>{post.title}</Text>
         <Text style={styles.body}>{post.body}</Text>
       </View>
       <View style={styles.comments}>
         <Text style={styles.title2}>Comments</Text>
-        {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
-        ))}
+        <FlatList
+          data={comments}
+          renderItem={({ item }) => <Comment comment={item} />}
+        />
       </View>
-      <Button title="Delete Post" onPress={deletePost} />
     </View>
   );
 }
@@ -72,19 +71,29 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 30,
+    color: "#00417D",
   },
   title2: {
     fontWeight: "bold",
     fontSize: 26,
+    color: "#00417D",
   },
   post: {
-    marginTop: 20,
+    marginTop: 8,
     fontSize: 25,
   },
   body: {
-    marginTop: 15,
+    marginTop: 8,
   },
   comments: {
-    marginTop: 15,
+    flex: 1,
+    marginTop: 13,
+    marginBottom: 13,
+  },
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    paddingLeft: 25,
+    paddingRight: 25,
   },
 });
