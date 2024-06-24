@@ -33,6 +33,8 @@ export default function ReviewDetails({ navigation: propNavigation }) {
         Alert.alert("OOPS!", "The entered user does not exist");
       } else if (!postTitle) {
         Alert.alert("OOPS!", "The Post Title field must not be empty");
+      } else if (body.trim().length === 0) {
+        Alert.alert("OOPS!", "The Post Body must contain non-space characters");
       } else if (!body) {
         Alert.alert("OOPS!", "The Post Body field must not be empty");
       } else if (body.length < 10) {

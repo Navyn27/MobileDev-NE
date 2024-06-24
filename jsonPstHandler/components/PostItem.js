@@ -68,7 +68,11 @@ const PostItem = ({ item, updatePosts }, { navigation: propNavigation }) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={deleteItem}>
           {isLoading ? (
-            <Ionicons name="trash-outline" size={24} color="#00417D" />
+            <Ionicons
+              name="ellipsis-horizontal-outline"
+              size={24}
+              color="#00417D"
+            />
           ) : (
             <Ionicons name="trash-bin-outline" size={24} color="#00417D" />
           )}
